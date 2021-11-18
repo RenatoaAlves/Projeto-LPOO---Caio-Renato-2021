@@ -8,7 +8,7 @@ public class Celula {
     private boolean minada;
     
     //define o estado da celula
-    public void temMina(boolean minada) {
+    public void setMinada(boolean minada) {
         if(minada == true) {
             this.minada = true;
         }
@@ -19,7 +19,7 @@ public class Celula {
     
     
     //retorna estado da celula
-    public boolean estadoCelula() {
+    public boolean getMinada() {
         return minada;
     }
     
