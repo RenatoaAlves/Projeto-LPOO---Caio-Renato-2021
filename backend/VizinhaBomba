@@ -1,0 +1,6 @@
+public class VizinhaBomba extends Celula{
+
+	public VizinhaBomba() {
+		setMinada(false);
+	}
+}
