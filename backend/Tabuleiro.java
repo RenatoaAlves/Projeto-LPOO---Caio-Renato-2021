@@ -40,7 +40,7 @@ public class Tabuleiro implements AcoesTabuleiro{
 					posicaoBombas.contains(i+tamLinha+1)||
 					posicaoBombas.contains(i+1)){
 					
-					mapa.add(new CelulaAlerta());
+					mapa.add(new CelulaAlerta(contarMinas(i)));
 				}
 			}
 			else if(i%tamLinha==9){
@@ -50,7 +50,7 @@ public class Tabuleiro implements AcoesTabuleiro{
 					posicaoBombas.contains(i+tamLinha-1)||
 					posicaoBombas.contains(i-1)) {
 					
-					mapa.add(new CelulaAlerta());
+					mapa.add(new CelulaAlerta(contarMinas(i)));
 				}
 			}
 			else {
@@ -63,7 +63,7 @@ public class Tabuleiro implements AcoesTabuleiro{
 					posicaoBombas.contains(i+1)||
 					posicaoBombas.contains(i-1)) {
 					
-					mapa.add(new CelulaAlerta());
+					mapa.add(new CelulaAlerta(contarMinas(i)));
 				}
 				else {
 					mapa.add(new CelulaVazia());
@@ -74,6 +74,37 @@ public class Tabuleiro implements AcoesTabuleiro{
 }
 	public void colocarBandeira(int posicao) {
 		mapa.get(posicao).setBandeira(true);
+	}
+	
+	public int contarMinas(int i) {
+		int contador = 0;
+		if(i%tamLinha == 0){
+			if(posicaoBombas.contains(i-tamLinha+1)) contador++;
+			if(posicaoBombas.contains(i-tamLinha)) contador++;
+			if(posicaoBombas.contains(i+tamLinha)) contador++;
+			if(posicaoBombas.contains(i+tamLinha+1)) contador++;
+			if(posicaoBombas.contains(i+1)) contador++;
+			}
+		
+		else if(i%tamLinha==9){
+			if(posicaoBombas.contains(i-tamLinha-1)) contador++;
+			if(posicaoBombas.contains(i-tamLinha)) contador++;
+			if(posicaoBombas.contains(i+tamLinha)) contador++;
+			if(posicaoBombas.contains(i+tamLinha-1)) contador++;
+			if(posicaoBombas.contains(i-1)) contador++;
+		
+		}
+		else {
+			if(posicaoBombas.contains(i-tamLinha-1)) contador++;
+			if(posicaoBombas.contains(i-tamLinha+1)) contador++;
+			if(posicaoBombas.contains(i-tamLinha)) contador++;
+			if(posicaoBombas.contains(i+tamLinha)) contador++;
+			if(posicaoBombas.contains(i+tamLinha-1)) contador++;
+			if(posicaoBombas.contains(i+tamLinha+1)) contador++;
+			if(posicaoBombas.contains(i+1)) contador++;
+			if(posicaoBombas.contains(i-1)) contador++;
+			}
+		return contador;
 	}
 
 
