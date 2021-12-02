@@ -5,7 +5,7 @@ package backend;
 public abstract class Celula{
     
 
-	private boolean minada;
+    private boolean minada;
     private boolean bandeira;
     private boolean descoberta;
     private boolean alerta;
