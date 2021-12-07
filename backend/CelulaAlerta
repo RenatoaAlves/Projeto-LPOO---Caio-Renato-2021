@@ -1,0 +1,20 @@
+public class CelulaAlerta extends Celula {
+	
+	
+	private int numBombasVizinhas;
+	
+	public CelulaAlerta() {
+		setAlerta(true);
+	}
+	
+	public CelulaAlerta(int numBombasVizinhas) {
+		this.numBombasVizinhas = numBombasVizinhas;
+	}
+	
+	
+	public int getNumBombasVizinhas() {
+		return numBombasVizinhas;
+	}
+	
+
+}
