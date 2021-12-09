@@ -1,25 +1,41 @@
 package backend;
 
-//import javax.swing.*;
+import java.awt.Color;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.ArrayList;
 
-public abstract class Celula{
+
+public class Celula extends JButton{
     
-
-    private boolean minada;
+	private int tipo;
+	private boolean minada;
     private boolean bandeira;
     private boolean descoberta;
     private boolean alerta;
+    private int posicao;
+    private boolean explosao;
+    private Tabuleiro tabuleiro;
     
-    public Celula() {
+    
+    public Celula(int posicao) {
+    	this.posicao = posicao;
+    	this.tabuleiro = new Tabuleiro();
     	
+    	addMouseListener(new MouseListener(){
+    		
+			public void mouseClicked(MouseEvent e) {
+				clique();
+				
+			}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseReleased(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+    		
+    	});
+
     }
-    
-    public Celula(boolean minada, boolean bandeira, boolean descoberta, boolean alerta) {
-		this.minada = minada;
-		this.bandeira = bandeira;
-		this.descoberta = descoberta;
-		this.alerta = alerta;
-	}
     
     
     //define o estado da celula
@@ -75,7 +91,40 @@ public abstract class Celula{
 	public int getNivelMaluquice() {
 		return 0;
 	}
+	
+	public int getPosicao() {
+		return posicao;
+	}
+	
+	public void clique() {
+		tabuleiro.clicar(this);
+	}
+	
+	public void setExplosao() {
+		this.explosao = true;
+	}
+	
+	public boolean getExplosao() {
+		return explosao;
+	}
 
+
+	public int getNumBombasVizinhas() {
+		return 0;
+	}
+	
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
+	
+	public int getTipo() {
+		return tipo;
+	}
+
+
+
+	
+	
  
 
     
