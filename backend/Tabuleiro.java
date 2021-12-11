@@ -251,8 +251,6 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 			celula.setBandeira(false);
 			celula.setIcon(grama);
 			bandeiras++;
-			System.out.println(minasMarcadas);
-			System.out.println(numBombas);
 		}
 		
 		for(int i=0; i<mapa.size();i++) {
