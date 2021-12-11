@@ -4,7 +4,13 @@ public interface AcoesTabuleiro {
 
 	void criarCampo();
 	
-	void colocarBandeira(int posicao);
+	int bandeirasRestantes();
 	
 	int contarMinas(int i);
+
+	void colocarBandeira(Celula celula);
+	
+	void clicar(Celula celula);
+	
+	void adicionarCelulas();
 }
