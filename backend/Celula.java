@@ -7,25 +7,32 @@ import java.util.ArrayList;
 
 
 public class Celula extends JButton{
-    
-private int tipo;
-private boolean minada;
-private boolean bandeira;
-private boolean descoberta;
-private boolean alerta;
-private int posicao;
-private boolean explosao;
-private Tabuleiro tabuleiro;
+
+	private int tipo;
+	private boolean minada;
+	private boolean bandeira;
+	private boolean descoberta;
+	private boolean alerta;
+	private int posicao;
+	private boolean explosao;
+	private Tabuleiro tabuleiro;
     
     
     public Celula(int posicao) {
+    	setTipo(0);
     	this.posicao = posicao;
     	this.tabuleiro = new Tabuleiro();
     	
     	addMouseListener(new MouseListener(){
     		
 			public void mouseClicked(MouseEvent e) {
-				clique();
+				if(SwingUtilities.isLeftMouseButton(e)) {
+					clique();
+				}
+				else {
+					cliqueDireito();
+				}
+				
 				
 			}
 			public void mousePressed(MouseEvent e) {}
@@ -98,6 +105,10 @@ private Tabuleiro tabuleiro;
 	
 	public void clique() {
 		tabuleiro.clicar(this);
+	}
+	
+	public void cliqueDireito() {
+		tabuleiro.colocarBandeira(this);
 	}
 	
 	public void setExplosao() {
