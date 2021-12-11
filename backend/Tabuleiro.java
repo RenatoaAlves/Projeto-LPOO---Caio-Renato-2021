@@ -64,7 +64,7 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 		for (int i = 0; i < tamMapa; i++) {
 			if (posicaoBombas.contains(i)) {
 				mapa.add(new Bomba(i));
-				mapa.get(i).setIcon(bomba);
+				mapa.get(i).setIcon(grama);
 			} else if (i % tamLinha == 0) {
 				if (posicaoBombas.contains(i - tamLinha + 1) || posicaoBombas.contains(i - tamLinha)
 						|| posicaoBombas.contains(i + tamLinha) || posicaoBombas.contains(i + tamLinha + 1)
