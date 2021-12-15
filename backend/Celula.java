@@ -16,12 +16,14 @@ public class Celula extends JButton{
 	private int posicao;
 	private boolean explosao;
 	private Tabuleiro tabuleiro;
+	//private TabuleiroMaluco tabuleiro; para usar no tabuleiro maluco. Isso irá mudar com a implementação da GUI separada
     
     
     public Celula(int posicao) {
     	setTipo(0);
     	this.posicao = posicao;
     	this.tabuleiro = new Tabuleiro();
+	//this.tabuleiro = new TabuleiroMaluco();
     	
     	addMouseListener(new MouseListener(){
     		
