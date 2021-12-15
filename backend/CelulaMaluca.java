@@ -7,14 +7,18 @@ public class CelulaMaluca extends Celula {
 	
 	Random aleatorio = new Random();
 	
-	public CelulaMaluca() {
-		
+	public CelulaMaluca(int posicao) {
+		super(posicao);
 	}
 	
 	//celula maluca com caracteristicas de bomba
-	public CelulaMaluca(boolean minada) {
+	public CelulaMaluca(int posicao, boolean minada) {
+		super(posicao);
 		this.setMinada(minada);
+		setTipo(3);
 	}
+	
+	
 	
 	
 	//definir a probabilidade maluca do celula
