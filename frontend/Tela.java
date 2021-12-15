@@ -27,6 +27,8 @@ public class Tela {
 		
 		}
 	
+	
+	//iniciar campo maluco
 	public Tela(int i) {
 		frame = new JFrame();
 		
