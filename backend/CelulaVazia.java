@@ -8,6 +8,13 @@ public class CelulaVazia extends Celula{
 		setTipo(1);
 	}
 	
+	public CelulaVazia(int posicao, boolean aberta) {
+		super(posicao);
+		setMinada(false);
+		setTipo(1);
+		setDescoberta(aberta);
+	}
+	
 
 	
 	
