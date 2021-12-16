@@ -1,39 +1,41 @@
 package backend;
-import java.util.Random;
+
+import java.awt.Color;
+import java.awt.event.*;
+import javax.swing.*;
+
 
 public class CelulaMaluca extends Celula {
 	
-	private int nivelMaluquice = 0;
+	private int numBombasVizinhas;
+	private TabuleiroMaluco tabuleiroMaluco;
 	
-	Random aleatorio = new Random();
 	
-	public CelulaMaluca(int posicao) {
+	
+	public CelulaMaluca(int posicao, int tipo) {
 		super(posicao);
-	}
-	
-	//celula maluca com caracteristicas de bomba
-	public CelulaMaluca(int posicao, boolean minada) {
-		super(posicao);
-		this.setMinada(minada);
-		setTipo(3);
-	}
-	
-	
-	
-	
-	//definir a probabilidade maluca do celula
-	public void setNivelMaluquice(int nivelMaluquice) {
-		this.nivelMaluquice = nivelMaluquice;
-	}
-	
-	//descobrir o nivel de maluquice da celula
-	public int getNivelMaluquice() {
-		return nivelMaluquice;
-	}
-	
-	
+		this.tabuleiroMaluco = new TabuleiroMaluco();
+		setTipo(tipo);
 
+	}
 	
+	
+	public void clique() {
+		tabuleiroMaluco.clicar(this);
+	}
+	
+	public void cliqueDireito() {
+		tabuleiroMaluco.colocarBandeira(this);
+	}
+	
+	
+	public void setNumBombasVizinhas(int num) {
+		this.numBombasVizinhas = num;
+	}
+	
+	public int getNumBombasVizinhas() {
+		return numBombasVizinhas;
+	}
 	
 	
 }
