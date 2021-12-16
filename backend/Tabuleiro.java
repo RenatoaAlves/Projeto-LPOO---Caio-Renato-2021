@@ -6,36 +6,32 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.*;
+import java.net.URL;
 
 public class Tabuleiro extends JPanel implements AcoesTabuleiro {
-	
-	
+
 	/**
-	 * partes do swing saira na versao final 
-	 * e vai para as classes do front end
+	 * partes do swing sairao na versao final e vao para as classes do front end
 	 * 
 	 */
 
 	public static ArrayList<Celula> mapa = new ArrayList<>();
+	public static ArrayList<Integer> minasMarcadas = new ArrayList<>();
 	private ArrayList<Integer> posicaoBombas = new ArrayList<>();
 	private ArrayList<Integer> adjacentes = new ArrayList<>();
 	private int numBombas = 10;
 	public static int bandeiras = 10;
 	private int tamMapa = 100;
 	private int tamLinha = 10;
-	public static ArrayList<Integer> minasMarcadas = new ArrayList<>();
 	public static int bombasNoCampo = 10;
-	
-	//retirar depois(apenas testes, saira na versao final)
-	
-	Icon bomba = new ImageIcon("src\\backend\\texture_pack\\tnt.png");
-	Icon terra = new ImageIcon("src\\backend\\texture_pack\\terra.jpeg");
-	Icon grama = new ImageIcon("src\\backend\\texture_pack\\grama.jpeg");
-	Icon bandeira = new ImageIcon("src\\backend\\texture_pack\\tocha_bandeira.png");
-	
-	
-	
-	
+	private int totalAbertas = 0;
+
+	// retirar depois(apenas testes, saira na versao final)
+
+	Icon bomba = new ImageIcon("src\\texture_pack\\tnt.png");
+	Icon terra = new ImageIcon("src\\texture_pack\\terra.jpeg");
+	Icon grama = new ImageIcon("src\\texture_pack\\grama.jpeg");
+	Icon bandeira = new ImageIcon("src\\texture_pack\\tocha_bandeira.png");
 
 	public Tabuleiro() {
 
@@ -98,7 +94,7 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 				} else {
 					mapa.add(new CelulaVazia(i));
 					mapa.get(i).setIcon(grama);
-					
+
 				}
 			}
 		}
@@ -112,6 +108,20 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 	// clicar na mina com o botao esquerdo(abrir)
 	public void clicar(Celula celula) {
 
+		totalAbertas = 0;
+		for (int i = 0; i < mapa.size(); i++) {
+			if (mapa.get(i).getTipo() != 3) {
+				if (mapa.get(i).getDescoberta()) {
+					totalAbertas++;
+				}
+			}
+		}
+
+		if (minasMarcadas.size() == bombasNoCampo && (totalAbertas + numBombas == mapa.size())) {
+			JOptionPane.showMessageDialog(null, "Parabéns!", "Não fez mais que sua obrigação",
+					JOptionPane.DEFAULT_OPTION);
+			System.exit(1);
+		}
 
 		if (!celula.getBandeira()) {
 			celula.setDescoberta(true);
@@ -120,20 +130,23 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 			if (celula.getTipo() == 3) {
 				celula.setExplosao();
 				celula.setIcon(bomba);
-				JOptionPane.showMessageDialog(null, "YOU ARE A FAILURE","U ARE A WASTE OF CARBON", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "YOU ARE A FAILURE", "U ARE A WASTE OF CARBON",
+						JOptionPane.INFORMATION_MESSAGE);
 				System.exit(1);
-				
+
 			}
 
 			if (celula.getTipo() == 2) {
+
 				int quantidade = celula.getNumBombasVizinhas();
 				celula.setText(String.valueOf(quantidade));
 				celula.setHorizontalTextPosition(SwingConstants.CENTER);
-		        celula.setForeground(Color.white);
+				celula.setForeground(Color.white);
 				celula.setIcon(terra);
 			}
 
 			if (celula.getTipo() == 1) {
+
 				int posicao = celula.getPosicao();
 				celula.setIcon(terra);
 
@@ -207,65 +220,85 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 				}
 
 			}
-						
-			
-			for(int i=0;i<adjacentes.size();i++) {
-			
+
+			for (int i = 0; i < adjacentes.size(); i++) {
+
 				if (mapa.get(adjacentes.get(i)).getTipo() == 2) {
+
 					int quantidade = mapa.get(adjacentes.get(i)).getNumBombasVizinhas();
 					mapa.get(adjacentes.get(i)).setText(String.valueOf(quantidade));
 					mapa.get(adjacentes.get(i)).setForeground(Color.white);
 					mapa.get(adjacentes.get(i)).setHorizontalTextPosition(SwingConstants.CENTER);
 					mapa.get(adjacentes.get(i)).setIcon(terra);
 					mapa.get(adjacentes.get(i)).setDescoberta(true);
-					
 
 				}
-				
-				if((!mapa.get(adjacentes.get(i)).getBandeira())) {
-					if(!mapa.get(adjacentes.get(i)).getDescoberta()) {
+
+				if ((!mapa.get(adjacentes.get(i)).getBandeira())) {
+					if (!mapa.get(adjacentes.get(i)).getDescoberta()) {
 
 						clicar(mapa.get(adjacentes.get(i)));
 					}
 
 				}
 			}
+			totalAbertas = 0;
+			for (int i = 0; i < mapa.size(); i++) {
+				if (mapa.get(i).getTipo() != 3) {
+					if (mapa.get(i).getDescoberta()) {
+						totalAbertas++;
+					}
+				}
+			}
+
+			if (minasMarcadas.size() == bombasNoCampo && (totalAbertas + numBombas == mapa.size())) {
+				JOptionPane.showMessageDialog(null, "Parabéns!", "Não fez mais que sua obrigação",
+						JOptionPane.DEFAULT_OPTION);
+				System.exit(1);
+			}
 
 		}
 	}
-	
-	//clicar com botao direito(bandeira)
-	public void colocarBandeira(Celula celula) {
-		
 
-		if((!celula.getBandeira())&&(!celula.getDescoberta())&&bandeiras>0) {
+	// clicar com botao direito(bandeira)
+	public void colocarBandeira(Celula celula) {
+
+		if ((!celula.getBandeira()) && (!celula.getDescoberta()) && bandeiras > 0) {
 			celula.setBandeira(true);
 			celula.setIcon(bandeira);
-			
-			bandeiras--;
-			System.out.println(minasMarcadas);
-			System.out.println(numBombas);
 
-		}
-		else if(celula.getBandeira()) {
+			bandeiras--;
+
+		} else if (celula.getBandeira()) {
 			celula.setBandeira(false);
 			celula.setIcon(grama);
 			bandeiras++;
 		}
-		
-		for(int i=0; i<mapa.size();i++) {
-			if(mapa.get(i).getTipo()==3 && mapa.get(i).getBandeira()) {
-				if(!minasMarcadas.contains(mapa.get(i).getPosicao())) {
+
+		for (int i = 0; i < mapa.size(); i++) {
+			if (mapa.get(i).getTipo() == 3 && mapa.get(i).getBandeira()) {
+				if (!minasMarcadas.contains(mapa.get(i).getPosicao())) {
 					minasMarcadas.add(mapa.get(i).getPosicao());
+				}
+
+			}
+
+		}
+		totalAbertas = 0;
+		for (int i = 0; i < mapa.size(); i++) {
+			if (mapa.get(i).getTipo() != 3) {
+				if (mapa.get(i).getDescoberta()) {
+					totalAbertas++;
 				}
 			}
 		}
-				
-		if(minasMarcadas.size() == bombasNoCampo) {
-			JOptionPane.showMessageDialog(null, "Parabéns!","Não fez mais que sua obrigação", JOptionPane.OK_OPTION);
+
+		if (minasMarcadas.size() == bombasNoCampo && (totalAbertas + numBombas == mapa.size())) {
+			JOptionPane.showMessageDialog(null, "Parabéns!", "Não fez mais que sua obrigação",
+					JOptionPane.DEFAULT_OPTION);
 			System.exit(1);
 		}
-		
+
 	}
 
 	public int contarMinas(int i) {
@@ -324,4 +357,3 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 	}
 
 }
-
