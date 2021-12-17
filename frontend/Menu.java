@@ -1,6 +1,6 @@
 package frontend;
 
-
+import backend.*;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,13 +11,22 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
+
 import javax.swing.JTextPane;
 import java.awt.Font;
+import java.awt.Window.Type;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import java.awt.Dialog.ModalExclusionType;
 
 
 public class Menu extends JFrame {
 
 	private JPanel contentPane;
+	private JTextField user;
+	public static String nome;
+	private BestTimes ranking; 
 
 	/**
 	 * Launch the application.
@@ -35,10 +44,16 @@ public class Menu extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
-	public Menu() {
+	
+	public Menu(){
+		
+		this.ranking = new BestTimes();
+		
+		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
+		setType(Type.POPUP);
+		setFont(new Font("Minecraft", Font.PLAIN, 12));
+		setTitle("Campo Minado");
+		setResizable(false);
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,7 +77,7 @@ public class Menu extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			//JOGO TRADICIONAL
 			public void actionPerformed(ActionEvent e) {
-				
+				nome = user.getText();
 				new Tela();
 				
 			}
@@ -83,27 +98,13 @@ public class Menu extends JFrame {
 		btnNewButton_1.setBackground(Color.LIGHT_GRAY);
 		contentPane.add(btnNewButton_1);
 		
-		/*JButton btnNewButton_2 = new JButton("Leaderboard ");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		}); 
-		btnNewButton_2.setFont(new Font("Minecraft", Font.PLAIN, 11));
-		btnNewButton_2.setBounds(0, 301, 484, 23);
-		btnNewButton_2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		btnNewButton_2.setBackground(Color.LIGHT_GRAY);
-		contentPane.add(btnNewButton_2);*/
 		
 		JButton btnNewButton_3 = new JButton("Jogar\r\n");
 		btnNewButton_3.setFont(new Font("Minecraft", Font.PLAIN, 11));
 		btnNewButton_3.addActionListener(new ActionListener() {
 			//JOGO MALUCO
 			public void actionPerformed(ActionEvent e) {
-				
+				nome = user.getText();
 				new Tela(1);
 			}
 		});
@@ -393,5 +394,34 @@ public class Menu extends JFrame {
 		JButton button = new JButton("New button");
 		button.setBounds(76, 245, 89, 23);
 		contentPane.add(button);
+		
+		JTextArea txtrUser = new JTextArea();
+		txtrUser.setBackground(new Color(153, 102, 51));
+		txtrUser.setFont(new Font("Minecraft", Font.PLAIN, 13));
+		txtrUser.setText("User\r\n");
+		txtrUser.setBounds(219, 401, 77, 12);
+		contentPane.add(txtrUser);
+		
+		user = new JTextField();
+		user.setToolTipText("User");
+		user.setFont(new Font("Minecraft", Font.PLAIN, 11));
+		user.setBounds(197, 419, 86, 20);
+		contentPane.add(user);
+		user.setColumns(10);
+		
+		JButton btnNewButton_1_1 = new JButton("Best Times");
+		btnNewButton_1_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				ranking.abrirRanking();
+			}
+		});
+		btnNewButton_1_1.setFont(new Font("Minecraft", Font.PLAIN, 11));
+		btnNewButton_1_1.setBackground(Color.LIGHT_GRAY);
+		btnNewButton_1_1.setBounds(0, 354, 484, 23);
+		contentPane.add(btnNewButton_1_1);
+	}
+	public JTextField getUser() {
+		return user;
 	}
 }
