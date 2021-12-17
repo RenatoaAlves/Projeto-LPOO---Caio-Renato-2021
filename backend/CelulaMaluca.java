@@ -1,7 +1,5 @@
 package backend;
 
-package backend;
-
 import java.awt.Color;
 import java.awt.event.*;
 import javax.swing.*;
