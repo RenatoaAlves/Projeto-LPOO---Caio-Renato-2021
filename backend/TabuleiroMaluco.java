@@ -23,7 +23,6 @@ public class TabuleiroMaluco extends JPanel implements AcoesTabuleiro {
 	private int totalAbertas = 1;
 	public static int numBombasMalucas = 0;
 
-	// retirar depois(apenas testes, saira na versao final)
 
 	Icon bomba = new ImageIcon("src\\texture_pack\\tnt.png");
 	Icon terra = new ImageIcon("src\\texture_pack\\terra.jpeg");
