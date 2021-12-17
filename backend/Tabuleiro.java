@@ -4,16 +4,18 @@ import java.util.Random;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.*;
+
+import frontend.Menu;
+
 import java.net.URL;
 
 public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 
-	/**
-	 * partes do swing sairao na versao final e vao para as classes do front end
-	 * 
-	 */
 
 	public static ArrayList<Celula> mapa = new ArrayList<>();
 	public static ArrayList<Integer> minasMarcadas = new ArrayList<>();
@@ -25,8 +27,12 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 	private int tamLinha = 10;
 	public static int bombasNoCampo = 10;
 	private int totalAbertas = 0;
+	private static long tempoInicial;
+	private static long tempoFinal;
+	private static long tempoTotal;
 
-	// retirar depois(apenas testes, saira na versao final)
+	
+
 
 	Icon bomba = new ImageIcon("src\\texture_pack\\tnt.png");
 	Icon terra = new ImageIcon("src\\texture_pack\\terra.jpeg");
@@ -41,13 +47,17 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 		super(g);
 		criarCampo();
 		adicionarCelulas();
+		
 	}
 
 	Random aleatorio = new Random();
 
 	// preencher o mapa
 	public void criarCampo() {
+	
+		tempoInicial = System.currentTimeMillis();	
 
+		
 		// gerar numeros aleatorios sem repeticao
 		while (posicaoBombas.size() < numBombas) {
 			int index = aleatorio.nextInt(100);
@@ -60,7 +70,7 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 		for (int i = 0; i < tamMapa; i++) {
 			if (posicaoBombas.contains(i)) {
 				mapa.add(new Bomba(i));
-				mapa.get(i).setIcon(grama);
+				mapa.get(i).setIcon(bomba);
 			} else if (i % tamLinha == 0) {
 				if (posicaoBombas.contains(i - tamLinha + 1) || posicaoBombas.contains(i - tamLinha)
 						|| posicaoBombas.contains(i + tamLinha) || posicaoBombas.contains(i + tamLinha + 1)
@@ -118,6 +128,12 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 		}
 
 		if (minasMarcadas.size() == bombasNoCampo && (totalAbertas + numBombas == mapa.size())) {
+			tempoFinal = System.currentTimeMillis();
+			tempoTotal = tempoFinal - tempoInicial;
+			tempoTotal = tempoTotal/1000;
+			
+			adicionarRank();
+			
 			JOptionPane.showMessageDialog(null, "Parabéns!", "Não fez mais que sua obrigação",
 					JOptionPane.DEFAULT_OPTION);
 			System.exit(1);
@@ -252,6 +268,12 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 			}
 
 			if (minasMarcadas.size() == bombasNoCampo && (totalAbertas + numBombas == mapa.size())) {
+				tempoFinal = System.currentTimeMillis();
+				tempoTotal = tempoFinal - tempoInicial;
+				tempoTotal = tempoTotal/1000;
+				
+				adicionarRank();
+				
 				JOptionPane.showMessageDialog(null, "Parabéns!", "Não fez mais que sua obrigação",
 						JOptionPane.DEFAULT_OPTION);
 				System.exit(1);
@@ -294,6 +316,12 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 		}
 
 		if (minasMarcadas.size() == bombasNoCampo && (totalAbertas + numBombas == mapa.size())) {
+			tempoFinal = System.currentTimeMillis();
+			tempoTotal = tempoFinal - tempoInicial;
+			tempoTotal = tempoTotal/1000;
+			
+			adicionarRank();
+		
 			JOptionPane.showMessageDialog(null, "Parabéns!", "Não fez mais que sua obrigação",
 					JOptionPane.DEFAULT_OPTION);
 			System.exit(1);
@@ -355,5 +383,21 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 			mapa.get(i).setPreferredSize(new Dimension(50, 50));
 		}
 	}
+
+	
+	public void adicionarRank() {
+		
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("ranking.txt", true));
+			writer.write(Menu.nome + " " + tempoTotal + "\n");
+			writer.close();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+		
+	}
+
+
 
 }
