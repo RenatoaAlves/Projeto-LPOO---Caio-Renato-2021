@@ -25,7 +25,7 @@ public class Menu extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField user;
-	public static String nome;
+	public static String nome = "unknown";
 	private BestTimes ranking; 
 
 	/**
