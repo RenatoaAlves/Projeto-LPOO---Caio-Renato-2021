@@ -113,8 +113,6 @@ public class TabuleiroMaluco extends JPanel implements AcoesTabuleiro {
 				}
 			}
 		}
-		System.out.println(totalAbertas);
-		System.out.println(minasMarcadas);
 
 		if (minasMarcadas.size() == bombasNoCampo && (totalAbertas + numBombas == mapa.size())) {
 			JOptionPane.showMessageDialog(null, "Parabéns!", "Não fez mais que sua obrigação",
