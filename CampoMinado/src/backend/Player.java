@@ -1,13 +1,13 @@
 package backend;
 
-public class Player {
+public class Player implements Comparable<Player> {
 
 	private String nome;
-	private int pontos;
+	private int tempo;
 	
-	public Player(String nome, int pnts) {
+	public Player(String nome, int tempo) {
 		this.nome = nome;
-		this.pontos = pontos;
+		this.tempo = tempo;
 	}
 	
 	
@@ -17,11 +17,17 @@ public class Player {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public int getPontos() {
-		return pontos;
+	public int getTempo() {
+		return tempo;
 	}
-	public void setPontos(int pontos) {
-		this.pontos = pontos;
+	public void setPontos(int tempo) {
+		this.tempo = tempo;
+	}
+
+
+	@Override
+	public int compareTo(Player o) {
+		return (this.tempo - o.getTempo());
 	}
 	
 }
