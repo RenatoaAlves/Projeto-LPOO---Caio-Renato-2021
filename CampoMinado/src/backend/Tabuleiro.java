@@ -29,7 +29,7 @@ public class Tabuleiro extends JPanel implements AcoesTabuleiro {
 	private int totalAbertas = 0;
 	private static long tempoInicial;
 	private static long tempoFinal;
-	private static long tempoTotal;
+	private static long tempoTotal = 1000;
 
 	
 
